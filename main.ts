@@ -5,7 +5,16 @@ const { mkdirSync, writeFileSync } = require("node:fs");
 const { join } = require("node:path");
 
 const ENTRY =
-  "He moved me six times this month chasing 'the vibe', and every new spot is somehow darker than the last — one star, I photosynthesise out of spite now.";
+  "He moved me six times this month chasing 'the vibe' — bathroom, bookshelf, behind the TV — and every new spot is somehow darker than the last. One star; I photosynthesise out of spite now.";
+
+// Reject the stock plant-review clichés so the entry stays fresh.
+const BANNED = ["drama queen", "dramatic wilting", "being ignored", "ignored me"];
+const lower = ENTRY.toLowerCase();
+const hit = BANNED.find((p) => lower.includes(p));
+if (hit) {
+  console.error(`entry contains a stock phrase: "${hit}"`);
+  process.exit(1);
+}
 
 const lines = ENTRY.split("\n");
 if (lines.length !== 1 || ENTRY.length < 1 || ENTRY.length > 279) {
